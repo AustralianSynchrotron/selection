@@ -1,0 +1,13 @@
+# $File: //ASP/tec/epics/selection/trunk/selectionSup/src/selection.dbd $
+# $Revision: #1 $
+# $DateTime: 2023/01/10 23:12:38 $
+# Last checked in by: $Author: starritt $
+#
+
+# Note: selectionInit is used with both selectionProc and reverseSelectionProc
+#
+function (selectionInit)
+function (selectionProc)
+function (reverseSelectionProc)
+
+# end

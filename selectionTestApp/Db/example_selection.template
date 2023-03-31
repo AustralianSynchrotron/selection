@@ -1,0 +1,235 @@
+# $File: //ASP/tec/epics/selection/trunk/selectionTestApp/Db/example_selection.template $
+# $Revision: #1 $
+# $DateTime: 2023/01/10 23:12:38 $
+# Last checked in by: $Author: starritt $
+#
+# In this example, the input arrays are auto saved.
+#
+record (waveform, "$(PREFIX):INPUT_VALUES1") {
+    field (DESC, "Input Values 1")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "STRING")
+    field (NELM, "$(NELM)")
+    field (EGU,  "")
+    field (PREC, "0")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES2") {
+    field (DESC, "Input Values 2")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "LONG")
+    field (NELM, "$(NELM)0")
+    field (EGU,  "??")
+    field (PREC, "0")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES3") {
+    field (DESC, "Input Values 3")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "DOUBLE")
+    field (NELM, "$(NELM)0")
+    field (EGU,  "??")
+    field (PREC, "3")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES4") {
+    field (DESC, "Input Values 4")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "DOUBLE")
+    field (NELM, "$(NELM)")
+    field (EGU,  "??")
+    field (PREC, "3")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES5") {
+    field (DESC, "Input Values 5")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "DOUBLE")
+    field (NELM, "$(NELM)")
+    field (EGU,  "??")
+    field (PREC, "3")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES6") {
+    field (DESC, "Input Values 6")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "DOUBLE")
+    field (NELM, "$(NELM)")
+    field (EGU,  "??")
+    field (PREC, "3")
+}
+
+record (waveform, "$(PREFIX):INPUT_VALUES7") {
+    field (DESC, "Input Values 6")
+    field (SCAN, "Passive")
+    field (PINI, "YES")
+    field (FTVL, "DOUBLE")
+    field (NELM, "$(NELM)")
+    field (EGU,  "??")
+    field (PREC, "2")
+    field (LOPR, "-80.0")
+    field (HOPR, "+80.0")
+}
+
+# Add or remove input values as needed.
+
+record (longout, "$(PREFIX):SELECT_INDEX_SP") {
+    field (DESC, "index number")
+    field (SCAN, "Passive")
+    field (LOPR, "0")
+    field (HOPR, "$(NELM)")
+    # No restiction to allow for testing
+    field (FLNK, "$(PREFIX):SELECTION_CALC")
+}
+
+record (aSub, "$(PREFIX):SELECTION_CALC") {
+    field (DESC, "Selection")
+    field (SCAN, "Passive")
+    field (INAM, "selectionInit")
+    field (SNAM, "selectionProc")
+
+    field (INPA, "$(PREFIX):SELECT_INDEX_SP MSI")
+    field (FTA,  "LONG")
+    field (NOA,  "1")
+
+    # FTVX must match FTX
+    # We must PP the OUTX as these are typically on the same IOC
+    #
+    field (INPB, "$(PREFIX):INPUT_VALUES1 MSI")
+    field (FTB,  "STRING")
+    field (NOB,  "$(NELM)0")
+
+    field (OUTB, "$(PREFIX):OUTPUT_VALUE1_SP PP")
+    field (FTVB, "STRING")
+    field (NOVB, "2")
+
+
+    field (INPC, "$(PREFIX):INPUT_VALUES2 MSI")
+    field (FTC,  "LONG")
+    field (NOC,  "$(NELM)0")
+
+    field (OUTC, "$(PREFIX):OUTPUT_VALUE2_SP PP")
+    field (FTVC, "LONG")
+    field (NOVC, "2")
+
+
+    field (INPD, "$(PREFIX):INPUT_VALUES3 MSI")
+    field (FTD,  "DOUBLE")
+    field (NOD,  "$(NELM)0")
+
+    field (OUTD, "$(PREFIX):OUTPUT_VALUE3_SP PP")
+    field (FTVD, "DOUBLE")
+    field (NOVD, "3")
+
+
+    field (INPE, "$(PREFIX):INPUT_VALUES4 MSI")
+    field (FTE,  "DOUBLE")
+    field (NOE,  "$(NELM)")
+
+    field (OUTE, "$(PREFIX):OUTPUT_VALUE4_SP PP")
+    field (FTVE, "DOUBLE")
+    field (NOVE, "1")
+
+
+    field (INPF, "$(PREFIX):INPUT_VALUES5 MSI")
+    field (FTF,  "DOUBLE")
+    field (NOF,  "$(NELM)")
+
+    field (OUTF, "$(PREFIX):OUTPUT_VALUE5_SP PP")
+    field (FTVF, "DOUBLE")
+    field (NOVF, "1")
+
+
+    field (INPG, "$(PREFIX):INPUT_VALUES6 MSI")
+    field (FTG,  "DOUBLE")
+    field (NOG,  "$(NELM)")
+
+    field (OUTG, "$(PREFIX):OUTPUT_VALUE6_SP PP")
+    field (FTVG, "DOUBLE")
+    field (NOVG, "1")
+
+
+    field (INPH, "$(PREFIX):INPUT_VALUES7 MSI")
+    field (FTH,  "DOUBLE")
+    field (NOH,  "$(NELM)")
+
+    field (OUTH, "$(PREFIX):OUTPUT_VALUE7_SP PP")
+    field (FTVH, "DOUBLE")
+    field (NOVH, "1")
+
+    # Add or remove  INPX/OUTX as needed - upto INPU/OUTU allowed.
+    # FLNK to another aSub recored if more than 20 parallel selection are required.
+}
+
+# In the example, the out put records are "here", however they would be 
+# typically elsewhere, e.g a motor record.
+#
+record (waveform, "$(PREFIX):OUTPUT_VALUE1_SP") {
+    field (DESC, "Selected value 1")
+    field (SCAN, "Passive")
+    field (NELM, "2")
+    field (FTVL, "STRING")
+}
+
+record (waveform, "$(PREFIX):OUTPUT_VALUE2_SP") {
+    field (DESC, "Selected value 2")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (NELM, "2")
+    field (FTVL, "LONG")
+}
+
+record (waveform, "$(PREFIX):OUTPUT_VALUE3_SP") {
+    field (DESC, "Selected value 3")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (PREC, "3")
+    field (NELM, "3")
+    field (FTVL, "DOUBLE")
+}
+
+record (ao, "$(PREFIX):OUTPUT_VALUE4_SP") {
+    field (DESC, "Selected value 4")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (PREC, "3")
+
+    # Needs EGU/PREC/HOPR/LOPR/DRVH/DRVL
+}
+
+record (ao, "$(PREFIX):OUTPUT_VALUE5_SP") {
+    field (DESC, "Selected value 5")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (PREC, "3")
+
+    # Needs EGU/PREC/HOPR/LOPR/DRVH/DRVL
+}
+
+record (ao, "$(PREFIX):OUTPUT_VALUE6_SP") {
+    field (DESC, "Selected value 6")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (PREC, "3")
+
+    # Needs EGU/PREC/HOPR/LOPR/DRVH/DRVL
+}
+
+record (ao, "$(PREFIX):OUTPUT_VALUE7_SP") {
+    field (DESC, "Selected value 7")
+    field (SCAN, "Passive")
+    field (EGU,  "??")
+    field (PREC, "2")
+
+    # Needs EGU/PREC/HOPR/LOPR/DRVH/DRVL
+}
+
+# Add or remove output values as needed.
+
+# end

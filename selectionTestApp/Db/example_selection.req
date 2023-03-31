@@ -1,0 +1,14 @@
+# $File: //ASP/tec/epics/selection/trunk/selectionTestApp/Db/example_selection.req $
+# $Revision: #1 $
+# $DateTime: 2023/01/10 23:12:38 $
+# Last checked in by: $Author: starritt $
+#
+
+$(PREFIX):INPUT_VALUES1
+$(PREFIX):INPUT_VALUES2
+$(PREFIX):INPUT_VALUES3
+$(PREFIX):INPUT_VALUES4
+$(PREFIX):INPUT_VALUES5
+$(PREFIX):INPUT_VALUES6
+
+# end
